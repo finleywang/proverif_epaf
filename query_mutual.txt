@@ -1,0 +1,131 @@
+E:\phd\manuscript_frm_vanet\ProVerif\ProVerif>proverif.exe -in pi frm/epaf_reg_auth.ml
+Linear part:
+XOR(m1_8,m2_9) = XOR(m2_9,m1_8)
+Completing equations...
+Completed equations:
+XOR(m1_8,m2_9) = XOR(m2_9,m1_8)
+Convergent part:
+Verify(k_6,m_7,Sign(m_7,k_6)) = true()
+Dec(k_4,Enc(k_4,m_5)) = m_5
+Completing equations...
+Completed equations:
+Dec(k_4,Enc(k_4,m_5)) = m_5
+Verify(k_6,m_7,Sign(m_7,k_6)) = true()
+Completed destructors:
+DXOR(XOR(m2_130,m1_129),m2_130) => m1_129
+DXOR(XOR(m1_125,m2_126),m2_126) => m1_125
+DMAC(km_132,MAC(km_132,m_131)) => m_131
+Process:
+new r0_14;
+{1}!
+(
+    new pw_iu_105;
+    {71}out(c_UseriInputForReg, pw_iu_105);
+    {72}out(c_UseriInputForRun, pw_iu_105);
+    0
+) | (
+    new pw_ju_104;
+    {69}out(c_UserjInputForReg, pw_ju_104);
+    {70}out(c_UserjInputForRun, pw_ju_104);
+    0
+) | (
+    new alpha_79;
+    new km_80;
+    new ts_km_81;
+    new PID_i_82;
+    new PID_j_83;
+    new TDID_i_84;
+    new TDID_j_85;
+    {50}let S_ID_CA_86 = h(ID_CA()) in
+    {51}let kp_87 = GenPubKey(alpha_79,S_ID_CA_86) in
+    {52}out(c_pub, S_ID_CA_86);
+    {53}in(c_Reg2TA, reg_info_i_88);
+    {54}let (ID_i'_89,gamma_iu_90,info_i'_91) = reg_info_i_88 in
+    {55}let pS_i_92 = XOR(h((ID_i'_89,TDID_i_84,PID_i_82)),h((TDID_i_84,km_80))) in
+    {56}let pU_iu_93 = XOR(h((ID_i'_89,gamma_iu_90,PID_i_82)),h((TDID_i_84,km_80))) in
+    {57}let pV_iu_94 = h(XOR(gamma_iu_90,PID_i_82)) in
+    {58}let pK_iu_95 = XOR(PID_i_82,h((TDID_i_84,gamma_iu_90))) in
+    {59}in(c_Reg2TA, reg_info_j_96);
+    {60}let (ID_j'_97,gamma_ju_98,info_j'_99) = reg_info_j_96 in
+    {61}let pS_j_100 = XOR(h((ID_j'_97,TDID_j_85,PID_j_83)),h((TDID_j_85,km_80))) in
+    {62}let pU_ju_101 = XOR(h((ID_j'_97,gamma_ju_98,PID_j_83)),h((TDID_j_85,km_80))) in
+    {63}let pV_ju_102 = h(XOR(gamma_ju_98,PID_j_83)) in
+    {64}let pK_ju_103 = XOR(PID_j_83,h((TDID_j_85,gamma_ju_98))) in
+    {65}out(c_TA2TDi, (TDID_i_84,pS_i_92,pV_iu_94,pK_iu_95));
+    {66}out(c_TA2TPDi, (TDID_i_84,PID_i_82,km_80,pU_iu_93,ts_km_81,pK_iu_95));
+    {67}out(c_TA2TDj, (TDID_j_85,pS_j_100,pV_ju_102,pK_ju_103));
+    {68}out(c_TA2TPDj, (TDID_j_85,PID_j_83,km_80,pU_ju_101,ts_km_81,pK_ju_103));
+    0
+) | (
+    new ID_i_64;
+    new ts_65;
+    {36}in(c_UseriInputForReg, pw_iu_66);
+    {37}let gamma_iu_67 = h(pw_iu_66) in
+    {38}out(c_Reg2TA, (ID_i_64,gamma_iu_67,info_i()));
+    {39}in(c_TA2TDi, reg_td_i_68);
+    {40}let (TDID_i_69,pS_i_70,pV_iu_71,pK_iu_72) = reg_td_i_68 in
+    {41}in(c_UseriInputForRun, pw_iu'_73);
+    {42}let gamma_iu'_74 = h(pw_iu'_73) in
+    {43}let PID_i'_75 = XOR(pK_iu_72,h((TDID_i_69,gamma_iu'_74))) in
+    {44}let pV_iu'_76 = h(XOR(gamma_iu'_74,PID_i'_75)) in
+    {45}if pV_iu'_76 = pV_iu_71 then
+    {46}let PID_i_ts_77 = XOR(h((ID_i_64,TDID_i_69,PID_i'_75)),h((PID_i'_75,ts_65))) in
+    {47}let sigPID_i_78 = h((pS_i_70,PID_i'_75,ts_65)) in
+    {48}event beginAuthTPDLogin(PID_i_ts_77,sigPID_i_78,ts_65);
+    {49}out(c_ViTD2TPD, (PID_i_ts_77,sigPID_i_78,ts_65));
+    0
+) | (
+    new ID_j_56;
+    {31}in(c_UserjInputForReg, pw_ju_57);
+    {32}let gamma_ju_58 = h(pw_ju_57) in
+    {33}out(c_Reg2TA, (ID_j_56,gamma_ju_58,info_j()));
+    {34}in(c_TA2TDj, reg_td_j_59);
+    {35}let (TDID_j_60,pS_ju_61,pV_ju_62,pK_ju_63) = reg_td_j_59 in
+    0
+) | (
+    {13}in(c_TA2TPDi, reg_tpd_i_33);
+    {14}let (TDID_i_34,PID_i_35,km_36,pU_iu_37,ts_km_38,pK_iu_39) = reg_tpd_i_33 in
+    {15}in(c_ViTD2TPD, loginInfo_i_40);
+    {16}let (PID_i_ts_41,sigPID_i_42,ts_43) = loginInfo_i_40 in
+    {17}let chi_i_44 = DXOR(PID_i_ts_41,h((PID_i_35,ts_43))) in
+    {18}let sigPID_i'_45 = h((XOR(chi_i_44,h((TDID_i_34,km_36))),PID_i_35,ts_43)) in
+    {19}if sigPID_i'_45 = sigPID_i_42 then
+    new m_46;
+    {20}let sigMSG_i_47 = MAC(km_36,(PID_i_ts_41,h((m_46,km_36)),ts_43)) in
+    {21}event endAuthTPDLogin(PID_i_ts_41,sigPID_i_42,ts_43);
+    {22}event beginAuthRequest(PID_i_ts_41,sigMSG_i_47,ts_43,m_46);
+    {23}out(c_pub, (PID_i_ts_41,sigMSG_i_47,ts_43,m_46));
+    {24}in(c_pub, message_j_48);
+    {25}let (PID_j_ts'_49,sigMUT_j_50,ts_l_51,m_l_52) = message_j_48 in
+    {26}let theta_i'_53 = DXOR(sigMSG_i_47,h((m_l_52,km_36))) in
+    {27}let sigMUT_j'_54 = MAC(km_36,(theta_i'_53,h((m_l_52,km_36)),ts_l_51)) in
+    {28}if sigMUT_j'_54 = sigMUT_j_50 then
+    {29}let accesstoken_55 = MAC(km_36,(PID_i_ts_41,h((m_l_52,km_36)),ts_l_51)) in
+    {30}event endAuthMutual(PID_j_ts'_49,sigMUT_j_50,ts_l_51,m_l_52);
+    0
+) | (
+    new m_l_15;
+    new ts_l_16;
+    new PID_j_ts_17;
+    {2}in(c_TA2TPDj, reg_tpd_j_18);
+    {3}let (TDID_j_19,PID_j_20,km_21,pU_ju_22,ts_km_23,pK_ju_24) = reg_tpd_j_18 in
+    {4}in(c_pub, message_i_25);
+    {5}let (PID_i_ts_26,sigMSG_i_27,ts_28,m_29) = message_i_25 in
+    {6}let sigMSG_i'_30 = MAC(km_21,(PID_i_ts_26,h((m_29,km_21)),ts_28)) in
+    {7}if sigMSG_i'_30 = sigMSG_i_27 then
+    {8}event endAuthRequest(PID_i_ts_26,sigMSG_i_27,ts_28,m_29);
+    {9}let theta_i_31 = DXOR(sigMSG_i'_30,h((m_l_15,km_21))) in
+    {10}let sigMUT_j_32 = MAC(km_21,(theta_i_31,h((m_l_15,km_21)),ts_l_16)) in
+    {11}event beginAuthMutual(PID_j_ts_17,sigMUT_j_32,ts_l_16,m_l_15);
+    {12}out(c_pub, (PID_j_ts_17,sigMUT_j_32,ts_l_16,m_l_15));
+    0
+)
+
+-- Query ev:endAuthMutual(x8_133,x9_134,x10_135,x11_136) ==> ev:beginAuthMutual(x8_133,x9_134,x10_135,x11_136)
+Completing...
+200 rules inserted. The rule base contains 143 rules. 66 rules in the queue.
+400 rules inserted. The rule base contains 311 rules. 62 rules in the queue.
+Starting query ev:endAuthMutual(x8_133,x9_134,x10_135,x11_136) ==> ev:beginAuthMutual(x8_133,x9_134,x10_135,x11_136)
+RESULT ev:endAuthMutual(x8_133,x9_134,x10_135,x11_136) ==> ev:beginAuthMutual(x8_133,x9_134,x10_135,x11_136) is true.
+
+E:\phd\manuscript_frm_vanet\ProVerif\ProVerif>
